@@ -153,24 +153,22 @@ export default function teste2() {
   }
 
   async function enviarTransacao(movimento: FormData) {
-    const formTransacao = new FormData();
-    formTransacao.append('codigoProduto', movimento.get('codigoProduto')!.toString());
-    formTransacao.append('estoque', parseInt(movimento.get('estoque')!.toString()).toString());
-    formTransacao.append('tipo', movimento.get('tipo')!.toString());
-    console.log(movimento.get('tipo'));
+    // Zod no backend espera números; enviamos como JSON já convertidos
+    const payload = {
+      codigoProduto: Number(codigoProduto),
+      estoque: Number(quantidade),
+      tipo: movimento.get('tipo')?.toString() ?? '',
+    };
+
     try {
-      if(movimento.get('tipo') === 'entrada') {
-        const resposta = await api.post('/adiciona', formTransacao, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      if (payload.tipo === 'entrada') {
+        const resposta = await api.post('/adiciona', payload, {
+          headers: { 'Content-Type': 'application/json' },
         });
         console.log('Transação enviada com sucesso:', resposta.data);
       } else {
-        const resposta = await api.post('/remove', formTransacao, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        const resposta = await api.post('/remove', payload, {
+          headers: { 'Content-Type': 'application/json' },
         });
         console.log('Transação enviada com sucesso:', resposta.data);
       }

@@ -71,18 +71,20 @@ export default function teste3() {
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm uppercase tracking-wide text-slate-500">Simulador</p>
-              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">Juros com data de vencimento</h1>
+              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">
+                Juros com data de vencimento
+              </h1>
             </div>
             <div className="mt-2 sm:mt-0 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
               Data atual: {dataAtual || '--/--/----'}
             </div>
           </div>
 
-          <form
-            className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4"
-            onSubmit={pegarDados}
-          >
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700" htmlFor="valor">
+          <form className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onSubmit={pegarDados}>
+            <label
+              className="flex flex-col gap-2 text-sm font-medium text-slate-700"
+              htmlFor="valor"
+            >
               Valor inicial
               <input
                 type="number"
@@ -96,7 +98,10 @@ export default function teste3() {
               />
             </label>
 
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700" htmlFor="dataVencimento">
+            <label
+              className="flex flex-col gap-2 text-sm font-medium text-slate-700"
+              htmlFor="dataVencimento"
+            >
               Data de vencimento
               <input
                 type="date"
@@ -107,7 +112,10 @@ export default function teste3() {
               />
             </label>
 
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700" htmlFor="taxaJurosDiaria">
+            <label
+              className="flex flex-col gap-2 text-sm font-medium text-slate-700"
+              htmlFor="taxaJurosDiaria"
+            >
               % de juros ao dia
               <input
                 type="text"
@@ -135,11 +143,14 @@ export default function teste3() {
             <div>
               <p className="text-sm text-slate-500">Valor final estimado</p>
               <p className="text-3xl font-bold text-slate-900">
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorFinal)}
+                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
+                  valorFinal
+                )}
               </p>
             </div>
             <div className="text-sm text-slate-500">
-              Juros diários informados: <span className="font-semibold text-slate-900">{taxaJurosDiaria || '0'}%</span>
+              Juros diários informados:{' '}
+              <span className="font-semibold text-slate-900">{taxaJurosDiaria || '0'}%</span>
             </div>
           </div>
         </div>
