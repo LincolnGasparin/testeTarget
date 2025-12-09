@@ -8,6 +8,7 @@ import {
     inserirTransacao,
     consultaRelatorio,
 } from './db/db.js';
+import { produtoSchema } from './db/produtoSchema.js';
 
 const app = express();
 app.use(cors());
@@ -39,21 +40,19 @@ app.get('/teste2db', async (req, res) => {
 });
 
 app.post('/adiciona', async (req, res) => {
-    const { codigoProduto, estoque, tipo } = req.body;
+    const validatedData = produtoSchema.parse(req.body);
     const currentDate = new Date();
-    const quantidadeEstoque = Number(estoque);
-    await adicionaQuantidade(codigoProduto, Number(estoque));
-    await inserirTransacao(tipo, currentDate.toISOString(), quantidadeEstoque, codigoProduto);
-    res.status(200).send(`Adicionou ${quantidade} ao produto ${codigoProduto}`);
+    await adicionaQuantidade(Number(validatedData.codigoProduto), Number(validatedData.estoque));
+    await inserirTransacao(validatedData.tipo, currentDate.toISOString(), Number(validatedData.estoque), Number(validatedData.codigoProduto));
+    res.status(200).send(`Adicionou ${validatedData.estoque} ao produto ${validatedData.codigoProduto}`);
 });
 
 app.post('/remove', async (req, res) => {
-    const { codigoProduto, estoque, tipo } = req.body;
+    const validatedData = produtoSchema.parse(req.body);
     const currentDate = new Date();
-    const quantidadeEstoque = Number(estoque);
-    await removeQuantidade(codigoProduto, quantidadeEstoque);
-    await inserirTransacao(tipo, currentDate.toISOString(), quantidadeEstoque, codigoProduto);
-    res.status(200).send(`Removeu ${quantidadeEstoque} do produto ${codigoProduto}`);
+    await removeQuantidade(Number(validatedData.codigoProduto), Number(validatedData.estoque));
+    await inserirTransacao(validatedData.tipo, currentDate.toISOString(), Number(validatedData.estoque), Number(validatedData.codigoProduto));
+    res.status(200).send(`Removeu ${validatedData.estoque} do produto ${validatedData.codigoProduto}`);
 });
 
 app.listen(port, () => {
